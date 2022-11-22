@@ -1,11 +1,14 @@
 from settings import *
 import pygame as pg
 import math
+import random
 
 class Player:
     def __init__(self, game):
         self.game = game
-        self.x, self.y = PLAYER_POS
+#        self.x, self.y = PLAYER_POS
+        open_cell = random.choice(game.map.open_cells)
+        self.x, self.y = open_cell['c'], open_cell['r']
         self.angle = PLAYER_ANGLE
 
     def movement(self):

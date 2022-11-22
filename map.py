@@ -19,12 +19,14 @@ class Map:
     def __init__(self, game):
         self.game = game
         self.mini_map = mini_map
-        self.mini_map = self.generateMap()#mini_map
+        self.open_cells = [{'c': PLAYER_POS[0], 'r': PLAYER_POS[1]}]
+        # self.mini_map, self.open_cells = self.generateMap()#mini_map
         self.world_map = {}
         self.get_map()
 
     def generateMap(self):
         mm = []
+        open_cells = []
         
         for r in range(NUM_ROWS):
             mm.append([])
@@ -35,10 +37,11 @@ class Map:
                     n = opensimplex.noise2(c * NOISE_ZOOM, r * NOISE_ZOOM)
                     if n < 0.0:
                         spr = _
+                        open_cells.append({'c':c, 'r':r})
                     else:
                         spr = int(p5Map(n, 0.0, 1.0, 1, 5))
                     mm[r].append(spr)
-        return mm
+        return mm, open_cells
         # return mini_map
 
     def get_map(self):
